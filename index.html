@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoLearn – Encryption & Decryption Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Particles -->
+    <div class="particles-container"></div>
+    
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🔐</span>
+                <span class="logo-text">CryptoLearn</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+                <li><a href="#algorithms" class="nav-link" data-section="algorithms">Algorithms</a></li>
+                <li><a href="#visualizer" class="nav-link" data-section="visualizer">Visualizer</a></li>
+                <li><a href="#networking" class="nav-link" data-section="networking">Networking</a></li>
+                <li><a href="#quiz" class="nav-link" data-section="quiz">Quiz</a></li>
+                <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="sound-toggle" id="soundToggle" title="Toggle sound effects">
+                    <span class="sound-icon">🔊</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="main-container">
+        <!-- HOME SECTION -->
+        <section id="home-section" class="section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">CryptoLearn</h1>
+                    <p class="hero-subtitle">Visualize Encryption & Decryption</p>
+                    <p class="hero-description">Master cybersecurity and cryptography through interactive visualizations and practical demonstrations</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="navigateSection('algorithms')">Start Learning</button>
+                        <button class="btn btn-secondary" onclick="navigateSection('visualizer')">Try Live Demo</button>
+                    </div>
+                </div>
+                <div class="hero-animation">
+                    <div class="encryption-text">
+                        <span class="char">C</span>
+                        <span class="char">r</span>
+                        <span class="char">y</span>
+                        <span class="char">p</span>
+                        <span class="char">t</span>
+                        <span class="char">o</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ALGORITHMS SECTION -->
+        <section id="algorithms-section" class="section">
+            <div class="section-header">
+                <h2>Encryption Algorithms</h2>
+                <p>Explore different cryptographic methods</p>
+            </div>
+            <div class="algorithm-tabs">
+                <button class="tab-btn active" data-tab="classical">Classical</button>
+                <button class="tab-btn" data-tab="modern">Modern</button>
+                <button class="tab-btn" data-tab="hashing">Hashing</button>
+                <button class="tab-btn" data-tab="encoding">Encoding</button>
+            </div>
+            <div class="algorithms-grid" id="algorithmsGrid"></div>
+        </section>
+
+        <!-- VISUALIZER SECTION -->
+        <section id="visualizer-section" class="section">
+            <div class="section-header">
+                <h2>Interactive Encryption Visualizer</h2>
+                <p>Encrypt and decrypt text in real-time with step-by-step visualization</p>
+            </div>
+            <div class="visualizer-container">
+                <div class="visualizer-panel">
+                    <div class="input-group">
+                        <label for="plainText">Plain Text:</label>
+                        <textarea id="plainText" placeholder="Enter text to encrypt..." rows="4"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label for="algorithmSelect">Select Algorithm:</label>
+                        <select id="algorithmSelect">
+                            <option value="caesar">Caesar Cipher</option>
+                            <option value="vigenere">Vigenère Cipher</option>
+                            <option value="base64">Base64 Encoding</option>
+                            <option value="hex">Hex Encoding</option>
+                            <option value="binary">Binary Encoding</option>
+                            <option value="ascii">ASCII Conversion</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="encryptionKey">Key/Shift (if needed):</label>
+                        <input type="text" id="encryptionKey" placeholder="Enter key (e.g., 3 for Caesar)">
+                    </div>
+                    <div class="visualizer-controls">
+                        <button class="btn btn-primary" onclick="encryptVisualize()">Encrypt</button>
+                        <button class="btn btn-secondary" onclick="decryptVisualize()">Decrypt</button>
+                        <button class="btn btn-outline" onclick="resetVisualizer()">Reset</button>
+                    </div>
+                </div>
+
+                <div class="visualizer-output">
+                    <div class="output-section">
+                        <h3>Cipher Text:</h3>
+                        <div id="cipherOutput" class="output-box"></div>
+                        <button class="btn btn-sm" onclick="copyOutput()">📋 Copy</button>
+                        <button class="btn btn-sm" onclick="downloadResult()">⬇️ Download</button>
+                    </div>
+                    <div class="output-section">
+                        <h3>Step-by-Step Process:</h3>
+                        <div id="stepsAnimation" class="steps-container"></div>
+                    </div>
+                    <div class="output-section">
+                        <h3>Metrics:</h3>
+                        <div id="metricsPanel" class="metrics-panel">
+                            <div class="metric">
+                                <span>Time:</span>
+                                <span id="encryptTime">0ms</span>
+                            </div>
+                            <div class="metric">
+                                <span>Characters:</span>
+                                <span id="charCount">0</span>
+                            </div>
+                            <div class="metric">
+                                <span>Security:</span>
+                                <span id="securityLevel">Low</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NETWORKING SECTION -->
+        <section id="networking-section" class="section">
+            <div class="section-header">
+                <h2>Networking Security Concepts</h2>
+                <p>Understand how encryption protects data in networks</p>
+            </div>
+            <div class="networking-tabs">
+                <button class="net-tab-btn active" data-net-tab="ssl">SSL/TLS</button>
+                <button class="net-tab-btn" data-net-tab="https">HTTPS</button>
+                <button class="net-tab-btn" data-net-tab="vpn">VPN</button>
+                <button class="net-tab-btn" data-net-tab="mitm">MITM Attack</button>
+            </div>
+            <div class="networking-content" id="networkingContent"></div>
+        </section>
+
+        <!-- QUIZ SECTION -->
+        <section id="quiz-section" class="section">
+            <div class="section-header">
+                <h2>Test Your Knowledge</h2>
+                <p>Answer questions about cryptography and networking security</p>
+            </div>
+            <div id="quizContainer" class="quiz-container"></div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about-section" class="section">
+            <div class="section-header">
+                <h2>About CryptoLearn</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-card">
+                    <h3>What is CryptoLearn?</h3>
+                    <p>CryptoLearn is an interactive educational platform designed to teach cryptography and networking security concepts through hands-on visualizations and practical demonstrations.</p>
+                </div>
+                <div class="about-card">
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li>Interactive encryption/decryption visualizer</li>
+                        <li>Step-by-step algorithm explanations</li>
+                        <li>Network security simulations</li>
+                        <li>Comprehensive quiz system</li>
+                        <li>Dark/Light mode support</li>
+                        <li>Progress tracking with localStorage</li>
+                    </ul>
+                </div>
+                <div class="about-card">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#" target="_blank">Cryptography Basics</a></li>
+                        <li><a href="#" target="_blank">NIST Security Guidelines</a></li>
+                        <li><a href="#" target="_blank">Networking Standards</a></li>
+                        <li><a href="#" target="_blank">Security Best Practices</a></li>
+                    </ul>
+                </div>
+                <div class="about-card">
+                    <h3>Developer Info</h3>
+                    <p>Built with vanilla HTML, CSS, and JavaScript. No frameworks or dependencies needed.</p>
+                    <p>Version 1.0 | 2024</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 CryptoLearn. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="algorithms.js"></script>
+    <script src="animations.js"></script>
+    <script src="quiz.js"></script>
+    <script src="networking.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
